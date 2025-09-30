@@ -2,11 +2,11 @@ import {
   type CommandsRegistry,
   registerCommand,
   runCommand
-} from "./commands.js";
-import { handlerLogin } from "./command_login.js";
+} from "./commands/commands";
+import { handlerLogin, handlerRegister } from "./commands/users";
 
 
-function main() {
+async function main() {
   const args = process.argv.slice(2);
 
   if (args.length === 0) {
@@ -20,9 +20,10 @@ function main() {
 
   const cmdsRegistry: CommandsRegistry = {};
   registerCommand(cmdsRegistry, "login", handlerLogin);
+  registerCommand(cmdsRegistry, "register", handlerRegister);
 
   try {
-    runCommand(cmdsRegistry, cmdName, ...cmdArgs);
+    await runCommand(cmdsRegistry, cmdName, ...cmdArgs);
   } catch (err) {
     if (err instanceof Error) {
       console.error(`Error running command ${cmdName}: ${err.message}`);
@@ -31,6 +32,7 @@ function main() {
     }
     process.exit(1);
   }
+  process.exit(0);
 }
 
 
