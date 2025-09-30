@@ -34,3 +34,11 @@ export async function handlerRegister(cmdName: string, ...args: string[]) {
   console.log(`New user created "${user.name}".`);
 }
 
+export async function handlerReset(cmdName: string, ...args: string[]) {
+  if (args.length !== 0) {
+    throw new Error(`Usage: ${cmdName}`);
+  }
+
+  await db.execute(sql`TRUNCATE TABLE users RESTART IDENTITY CASCADE;`);
+}
+

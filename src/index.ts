@@ -3,7 +3,13 @@ import {
   registerCommand,
   runCommand
 } from "./commands/commands";
-import { handlerLogin, handlerRegister } from "./commands/users";
+import {
+  handlerReset,
+} from "./commands/reset";
+import {
+  handlerLogin,
+  handlerRegister,
+} from "./commands/users";
 
 
 async function main() {
@@ -21,6 +27,7 @@ async function main() {
   const cmdsRegistry: CommandsRegistry = {};
   registerCommand(cmdsRegistry, "login", handlerLogin);
   registerCommand(cmdsRegistry, "register", handlerRegister);
+  registerCommand(cmdsRegistry, "reset", handlerReset);
 
   try {
     await runCommand(cmdsRegistry, cmdName, ...cmdArgs);
