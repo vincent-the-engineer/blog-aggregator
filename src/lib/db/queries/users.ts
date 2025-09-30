@@ -1,4 +1,4 @@
-import { eq, sql } from "drizzle-orm";
+import { asc, eq, sql } from "drizzle-orm";
 
 import { db } from "..";
 import { users } from "../schema";
@@ -22,5 +22,9 @@ export async function getUser(name: string) {
     return;
   }
   return result[0];
+}
+
+export async function getUsers() {
+  return await db.select().from(users).orderBy(asc(users.name));
 }
 

@@ -1,5 +1,5 @@
-import { setUser } from "../config";
-import { createUser, getUser } from "../lib/db/queries/users";
+import { readConfig, setUser } from "../config";
+import { createUser, getUser, getUsers } from "../lib/db/queries/users";
 
 
 export async function handlerLogin(cmdName: string, ...args: string[]) {
@@ -34,11 +34,16 @@ export async function handlerRegister(cmdName: string, ...args: string[]) {
   console.log(`New user created "${user.name}".`);
 }
 
-export async function handlerReset(cmdName: string, ...args: string[]) {
-  if (args.length !== 0) {
-    throw new Error(`Usage: ${cmdName}`);
-  }
+export async function handlerUsers(cmdName: string, ...args: string[]) {
+  const users = await getUsers();
+  const config = readConfig();
 
-  await db.execute(sql`TRUNCATE TABLE users RESTART IDENTITY CASCADE;`);
+  for (const user of users) {
+    let isCurrentUser = "";
+    if (user.name === config.currentUserName) {
+      isCurrentUser = " (current)";
+    }
+    console.log(`* ${user.name}${isCurrentUser}`);
+  }
 }
 

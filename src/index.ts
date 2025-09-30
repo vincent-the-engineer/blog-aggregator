@@ -9,6 +9,7 @@ import {
 import {
   handlerLogin,
   handlerRegister,
+  handlerUsers,
 } from "./commands/users";
 
 
@@ -28,6 +29,7 @@ async function main() {
   registerCommand(cmdsRegistry, "login", handlerLogin);
   registerCommand(cmdsRegistry, "register", handlerRegister);
   registerCommand(cmdsRegistry, "reset", handlerReset);
+  registerCommand(cmdsRegistry, "users", handlerUsers);
 
   try {
     await runCommand(cmdsRegistry, cmdName, ...cmdArgs);
