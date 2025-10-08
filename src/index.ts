@@ -1,4 +1,7 @@
 import {
+  handlerAgg,
+} from "./commands/aggregate";
+import {
   type CommandsRegistry,
   registerCommand,
   runCommand
@@ -26,6 +29,7 @@ async function main() {
 
 
   const cmdsRegistry: CommandsRegistry = {};
+  registerCommand(cmdsRegistry, "agg", handlerAgg);
   registerCommand(cmdsRegistry, "login", handlerLogin);
   registerCommand(cmdsRegistry, "register", handlerRegister);
   registerCommand(cmdsRegistry, "reset", handlerReset);
